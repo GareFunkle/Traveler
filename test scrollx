@@ -1,0 +1,9 @@
+def scroll_x(self):
+    player = self.player
+    player_x = self.player.rect.centerx
+    direction_x = self.player.rect.x
+
+
+screen.blit(background_2, (x_background + 1280, 0))
+    screen.blit(background_3, (x_background + 2560, 0))
+    screen.blit(background_4, (x_background + 3840, 0))
