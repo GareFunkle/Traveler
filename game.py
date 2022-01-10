@@ -27,7 +27,7 @@ class Game:
         self.collision_sol = False
         # gestion des fps
         self.clock = pygame.time.Clock()
-        self.fps = 90
+        self.fps = 60
         self.plateform_group = pygame.sprite.Group()
         self.screen_width = screen_width
         self.world_shift = 0
