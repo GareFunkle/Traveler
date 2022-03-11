@@ -6,11 +6,10 @@ from pygame.draw import rect
 class Unit:
     def __init__(self, sprite, current_health=100, max_health=100):
         self.sprite = sprite
-        print(sprite)
 
         self.rect = self.sprite.image.get_rect()
 
-        self.rect.x = 0
+        self.rect.x = 570
         self.rect.y = 0
         self.current_health = current_health
         self.max_health = max_health

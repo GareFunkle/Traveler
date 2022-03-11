@@ -1,8 +1,9 @@
 from pygame import sprite
-from lib.player.animatesprite import Player_Sprite
-from lib.player.player import Player
-from lib.monsters.monster import Gaulois
-from lib.sol.sol import Sol
+from characters.Npc.GeneralNpc.npc import NPC
+from characters.Npc.Grec.animate_grec_npc.animate_grec_npc import Grec_Sprite
+from characters.Player.AnimatePlayer.animatesprite import Player_Sprite
+from characters.Player.player import Player
+from Maps.Sol.sol import Sol
 
 # from plateform import Plateform
 import pygame
@@ -12,13 +13,14 @@ import pygame
 class Game:
     def __init__(self, screen_width=1280):
         # definir si notre jeu a commencer ou non
-        self.is_playing = False
+        self.is_playing = True
         # generer notre joueur
         self.all_players = pygame.sprite.Group()
         self.player = Player()
         self.all_players.add()
         # groupe de monstre
-        self.all_monsters = pygame.sprite.Group()
+        self.npc = NPC()
+        self.all_npc = pygame.sprite.Group()
         self.pressed = {}
         # sol et gravite plus colision avec sol
         self.sol = Sol()
@@ -34,22 +36,20 @@ class Game:
 
     def start(self):
         self.is_playing = True
-        self.spawn_monster(Gaulois)
+        self.spawn_monster()
 
     def game_over(self):
         # remettre le jeu a neuf, retirer les monstres remmetre le joueurs a 100 point de vie , jeu en attentes
         self.all_monsters = pygame.sprite.Group()
-        self.player.health = self.player.max_health
+        self.player.current_health = self.player.max_health
         self.is_playing = False
 
     def update(self, screen):
 
-        self.scroll_x()
-
         # actualiser la barre de vie du joueur
         self.player.update_health_bar(screen)
 
-        # actualiser lanimation du joueur
+        # actualiser l'animation du joueur
         self.player.sprite.animate()
 
         # appliquer le sol pour le joueur et les monstres
@@ -71,24 +71,23 @@ class Game:
         self.clock.tick(self.fps)
 
         # récuperer les monstres de notre jeu
-        for monster in self.all_monsters:
-            monster.forward()
-            monster.update_health_bar(screen)
-            monster.update_animation()
+        for npc in self.all_npc:
+            npc.update_health_bar(screen)
 
         # appliquer l'ensemble des images de mon groupe de monstres
-        self.all_monsters.draw(screen)
+        self.all_npc.draw(screen)
 
         # appliquer limage du joueur
         screen.blit(self.player.sprite.image, self.player.rect)
 
         # verifier si le joueur souhaite aller a hauche ou a droite
         if self.pressed.get(pygame.K_RIGHT):
-            # and self.player.rect.x + self.player.rect.width < screen.get_width()):
             self.player.move_right()
+            self.scroll_x()
 
         if self.pressed.get(pygame.K_LEFT):
             self.player.move_left()
+            self.scroll_x()
 
         # verifier si le joueur saute
         if self.pressed.get(pygame.K_UP):
@@ -103,25 +102,23 @@ class Game:
             sprite, group, False, pygame.sprite.collide_mask
         )
 
-    def spawn_monster(self, monster_class_name):
-        self.all_monsters.add(monster_class_name.__call__(self))
+    def spawn_monster(self, npc_class_name):
+        self.all_npc.add(npc_class_name.__call__(self))
 
     def gravity_game(self):
         self.player.rect.y += self.gravity[1] + self.resistance[1]
 
     def scroll_x(self):
-        player = self.player.sprite
-        player_x = self.player.rect.x + self.player.rect.width
-        direction_x = self.player.rect.x
+        # if self.player.rect.x + self.player.rect.width < self.screen_width / 4 and self.player.rect.x:
+        self.world_shift -= self.player.speed_walk
+        self.player.rect.x = self.player.speed_walk
+        self.player.rect.x = self.screen_width / 2.30
 
-        if player_x < self.screen_width / 4 and direction_x < 0:
-            self.world_shift += 1
-            player.speed_walk = 0
-
-        elif player_x > self.screen_width - (self.screen_width / 4) and direction_x > 0:
-            self.world_shift -= 1
-            player.speed_walk = 0
-
-        else:
-            self.world_shift = 0
-            player.speed_walk = 3
+    # def forward(self):
+        # le deplacement ne se fait qie si il ny a pas de colision avec un groupe de joueur
+        # if not self.check_collision(self, self.all_players):
+        #   self.npc.rect.x -= self.npc.speed_walk
+        # si le monstre est en colision avec le joueur
+        # else:
+        # i,fliger des degat au joeur
+        #   self.player.damage(self.attack_damage)

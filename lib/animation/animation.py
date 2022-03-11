@@ -65,7 +65,5 @@ def load_animation_images(sprite_name):
 # mummy -> [...mummy1.png, ...mummy2.png, ...]
 animations = {
     "gaulois": load_animation_images("gaulois"),
-    "player": load_animation_images("player"),
-    "attack": load_animation_images("attack")
     # "gaulois_archer": load_animation_images("gaulois_archer"),
 }
