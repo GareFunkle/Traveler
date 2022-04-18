@@ -1,14 +1,15 @@
-from pygame import sprite
+import Data.config as config
 from characters.Npc.GeneralNpc.npc import NPC
 from characters.Npc.Grec.animate_grec_npc.animate_grec_npc import Grec_Sprite
 from characters.Player.AnimatePlayer.animatesprite import Player_Sprite
 from characters.Player.player import Player
 from Maps.Sol.sol import Sol
 
+
 # from plateform import Plateform
 import pygame
 
-FPS = 60
+
 
 # creer une seconde class
 class Game:
@@ -30,7 +31,7 @@ class Game:
         self.collision_sol = False
         # gestion des fps
         self.clock = pygame.time.Clock()
-        self.fps = FPS
+        self.fps = config.FPS
         self.plateform_group = pygame.sprite.Group()
         self.screen_width = screen_width
         self.world_shift = 0
