@@ -54,6 +54,8 @@ class Game:
         # actualiser l'animation du joueur
         self.player.sprite.animate()
 
+        self.npc.sprite.animate()
+
         # appliquer le sol pour le joueur et les monstres
         self.sol.afficher(screen)
         if self.sol.rect.colliderect(self.player.rect):
@@ -69,6 +71,13 @@ class Game:
         # appliquer la gravite
         self.gravity_game()
 
+        if self.sol.rect.colliderect(self.npc.rect):
+            self.resistance = (0, -10)
+            self.collision_sol = True
+
+        else:
+            self.resistance = (0, 0)
+
         # appliquer une limite des FPS
         self.clock.tick(self.fps)
 
@@ -79,6 +88,9 @@ class Game:
 
         # appliquer l'ensemble des images de mon groupe de monstres
         self.all_npc.draw(screen)
+
+        screen.blit(self.npc.sprite.image, self.npc.rect)
+        print(self.npc.rect)
         
 
         # appliquer limage du joueur
@@ -120,11 +132,11 @@ class Game:
         self.player.rect.x = self.player.speed_walk
         self.player.rect.x = self.screen_width / 2.30
 
-    # def forward(self):
-    #     # le deplacement ne se fait qie si il ny a pas de colision avec un groupe de joueur
-    #     if not self.check_collision(self, self.all_players):
-    #       self.npc.rect.x -= self.npc.speed_walk
-    #     # si le monstre est en colision avec le joueur
-    #     else:
-    #     # i,fliger des degat au joeur
-    #       self.player.damage(self.player)
+    def forward(self):
+        # le deplacement ne se fait qie si il ny a pas de colision avec un groupe de joueur
+        if not self.check_collision(self, self.all_players):
+          self.npc.rect.x -= self.npc.speed_walk
+        # si le monstre est en colision avec le joueur
+        else:
+        # i,fliger des degat au joeur
+          self.player.damage(self.player)
