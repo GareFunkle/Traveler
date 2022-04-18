@@ -19,7 +19,7 @@ class Game:
         # generer notre joueur
         self.all_players = pygame.sprite.Group()
         self.player = Player()
-        self.all_players.add()
+        self.all_players.add(self.player.sprite)
         # groupe de monstre
         self.npc = NPC()
         self.all_npc = pygame.sprite.Group()
@@ -38,7 +38,7 @@ class Game:
 
     def start(self):
         self.is_playing = True
-        self.spawn_monster()
+        self.spawn_npc()
 
     def game_over(self):
         # remettre le jeu a neuf, retirer les monstres remmetre le joueurs a 100 point de vie , jeu en attentes
@@ -54,6 +54,7 @@ class Game:
         # actualiser l'animation du joueur
         self.player.sprite.animate()
 
+        # actualiser l'animation du monstre
         self.npc.sprite.animate()
 
         # appliquer le sol pour le joueur et les monstres
@@ -82,15 +83,21 @@ class Game:
         self.clock.tick(self.fps)
 
         # récuperer les monstres de notre jeu
-        for npc in self.all_npc:
-            self.npc.update_health_bar(screen)
-            # self.forward()
+        # for npc in self.all_npc:
+        self.npc.update_health_bar(screen)
+            # self.npc.damage()
+        # self.forward()
+        # self.player.damage(self.player)
+        if not self.check_collision(self, self.all_players):
+            self.npc.rect.x -= self.npc.speed_walk
+
+            # self.npc.rect.x -= self.npc.speed_walk
 
         # appliquer l'ensemble des images de mon groupe de monstres
         self.all_npc.draw(screen)
-
+        
+        # appliquer l'image du npc
         screen.blit(self.npc.sprite.image, self.npc.rect)
-        print(self.npc.rect)
         
 
         # appliquer limage du joueur
@@ -118,8 +125,9 @@ class Game:
         return pygame.sprite.spritecollide(
             sprite, group, False, pygame.sprite.collide_mask
         )
+        
 
-    def spawn_monster(self):
+    def spawn_npc(self):
         self.all_npc.add(self.npc.sprite)
         # self.all_npc.add(npc_class_name.__call__(self))
 
@@ -132,11 +140,11 @@ class Game:
         self.player.rect.x = self.player.speed_walk
         self.player.rect.x = self.screen_width / 2.30
 
-    def forward(self):
-        # le deplacement ne se fait qie si il ny a pas de colision avec un groupe de joueur
-        if not self.check_collision(self, self.all_players):
-          self.npc.rect.x -= self.npc.speed_walk
+    # def forward(self):
+    #     # le deplacement ne se fait qie si il ny a pas de colision avec un groupe de joueur
+    #     if not self.check_collision(self, self.all_players):
+    #       self.npc.rect.x -= self.npc.speed_walk
         # si le monstre est en colision avec le joueur
-        else:
-        # i,fliger des degat au joeur
-          self.player.damage(self.player)
+        # else:
+        # # infliger des degats au joeur
+        #   self.player.damage(self.player)

@@ -8,7 +8,7 @@ class Unit:
         self.sprite = sprite
         self.rect = self.sprite.get_rect()
         self.rect.x = 700 + random.randint(0, 300)
-        self.rect.y = 250 - offset
+        self.rect.y = 230 - offset
         self.current_health = current_health
         self.max_health = max_health
 
@@ -37,3 +37,4 @@ class Unit:
             self.rect.x = 1000 + random.randint(0, 300)
             self.speed_walk = random.randint(1, 3)
             self.current_health = self.max_health
+            
