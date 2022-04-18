@@ -25,7 +25,7 @@ class Unit:
         pygame.draw.rect(
             surface,
             (111, 210, 46),
-            [self.rect.x + 10, self.rect.y - 20, self.health, 5],
+            [self.rect.x + 10, self.rect.y - 20, self.current_health, 5],
         )
 
     def damage(self, amount):

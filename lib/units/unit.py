@@ -6,8 +6,8 @@ from pygame.draw import rect
 class Unit:
     def __init__(self, sprite, current_health=100, max_health=100):
         self.sprite = sprite
-
-        self.rect = self.sprite.image.get_rect()
+        
+        self.rect = self.sprite.get_rect()
 
         self.rect.x = 570
         self.rect.y = 0

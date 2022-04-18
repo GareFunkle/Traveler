@@ -8,12 +8,13 @@ from Maps.Sol.sol import Sol
 # from plateform import Plateform
 import pygame
 
+FPS = 60
 
 # creer une seconde class
 class Game:
     def __init__(self, screen_width=1280):
         # definir si notre jeu a commencer ou non
-        self.is_playing = True
+        self.is_playing = False
         # generer notre joueur
         self.all_players = pygame.sprite.Group()
         self.player = Player()
@@ -29,7 +30,7 @@ class Game:
         self.collision_sol = False
         # gestion des fps
         self.clock = pygame.time.Clock()
-        self.fps = 60
+        self.fps = FPS
         self.plateform_group = pygame.sprite.Group()
         self.screen_width = screen_width
         self.world_shift = 0
@@ -72,10 +73,12 @@ class Game:
 
         # récuperer les monstres de notre jeu
         for npc in self.all_npc:
-            npc.update_health_bar(screen)
+            self.npc.update_health_bar(screen)
+            # self.forward()
 
         # appliquer l'ensemble des images de mon groupe de monstres
         self.all_npc.draw(screen)
+        
 
         # appliquer limage du joueur
         screen.blit(self.player.sprite.image, self.player.rect)
@@ -94,16 +97,18 @@ class Game:
             self.player.to_jump = True
             self.player.number_jump += 1
 
+        # verifier si le joueur saute 
         if self.pressed.get(pygame.K_SPACE):
             self.player.sprite.status = 'attack'
-
+    
     def check_collision(self, sprite, group):
         return pygame.sprite.spritecollide(
             sprite, group, False, pygame.sprite.collide_mask
         )
 
-    def spawn_monster(self, npc_class_name):
-        self.all_npc.add(npc_class_name.__call__(self))
+    def spawn_monster(self):
+        self.all_npc.add(self.npc.sprite)
+        # self.all_npc.add(npc_class_name.__call__(self))
 
     def gravity_game(self):
         self.player.rect.y += self.gravity[1] + self.resistance[1]
@@ -115,10 +120,10 @@ class Game:
         self.player.rect.x = self.screen_width / 2.30
 
     # def forward(self):
-        # le deplacement ne se fait qie si il ny a pas de colision avec un groupe de joueur
-        # if not self.check_collision(self, self.all_players):
-        #   self.npc.rect.x -= self.npc.speed_walk
-        # si le monstre est en colision avec le joueur
-        # else:
-        # i,fliger des degat au joeur
-        #   self.player.damage(self.attack_damage)
+    #     # le deplacement ne se fait qie si il ny a pas de colision avec un groupe de joueur
+    #     if not self.check_collision(self, self.all_players):
+    #       self.npc.rect.x -= self.npc.speed_walk
+    #     # si le monstre est en colision avec le joueur
+    #     else:
+    #     # i,fliger des degat au joeur
+    #       self.player.damage(self.player)

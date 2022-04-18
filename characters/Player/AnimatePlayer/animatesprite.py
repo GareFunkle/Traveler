@@ -10,6 +10,7 @@ class Player_Sprite(pygame.sprite.Sprite):
         self.frame_index = 0
         self.animation_speed = 0.25
         self.image = self.animations['idle'][self.frame_index]
+        self.rect = self.image.get_rect()
 
         self.status = 'idle'
         self.facing_right = True
@@ -61,3 +62,6 @@ class Player_Sprite(pygame.sprite.Sprite):
 
     def getstatus(self):
         self.status
+        
+    def get_rect(self):
+        return self.rect

@@ -1,3 +1,4 @@
+from cmath import rect
 import pygame
 import random
 from characters.Npc.Grec.animate_grec_npc.animate_grec_npc import Grec_Sprite
@@ -12,3 +13,4 @@ class NPC(Unit, Can_Walk, Can_Attack):
                       max_health=100, offset=0)
         Can_Walk.__init__(self, self.rect, speed_walk=random.randint(1, 3))
         Can_Attack.__init__(self, attack_damage=5)
+        
