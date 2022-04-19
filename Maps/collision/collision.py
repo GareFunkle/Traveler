@@ -2,6 +2,7 @@ import pygame
 
 class Collision:
     def __init__(self):
+        self.rect = get_rect()
         
     
 def check_collision(self, sprite, group):
@@ -10,4 +11,4 @@ def check_collision(self, sprite, group):
     )
     
 def get_rect():
-    return self.rect
+    return get_rect()
