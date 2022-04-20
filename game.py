@@ -1,3 +1,4 @@
+from turtle import speed
 import Data.config as config
 from Maps.collision.collision import get_rect
 from characters.Npc.GeneralNpc.npc import NPC
@@ -48,18 +49,18 @@ class Game:
         self.player.current_health = self.player.max_health
         self.is_playing = False
 
-    def update(self, screen):
+    def update(self, screen):       
+# -------------------------- Partie Jeux -----------------------------------------------------------------------------------------------
 
-        # actualiser la barre de vie du joueur
-        self.player.update_health_bar(screen)
 
-        # actualiser l'animation du joueur
-        self.player.sprite.animate()
+        # appliquer une limite des FPS
+        self.clock.tick(self.fps)
 
-        # actualiser l'animation du monstre
-        self.npc.sprite.animate()
+# ----------------------------------------- End ------------------------------------------------------------------------------------------
 
-        # appliquer le sol pour le joueur
+# -------------------------- Partie Player -----------------------------------------------------------------------------------------------       
+       
+               # appliquer le sol pour le joueur
         self.sol.afficher(screen)
         if self.sol.rect.colliderect(self.player.rect):
             self.resistance = (0, -10)
@@ -70,41 +71,20 @@ class Game:
 
         if self.player.to_jump and self.collision_sol:
             self.player.move_jump()
-
-        # appliquer la gravite
-        self.gravity_game()
-
-        # appliquer le sol pour les monstre
-        if self.sol.rect.colliderect(self.npc.rect):
-            self.resistance = (0, -10)
-            self.collision_sol = True
-
-        else:
-            self.resistance = (0, 0)
-
-        # appliquer une limite des FPS
-        self.clock.tick(self.fps)
-
-        # récuperer les monstres de notre jeu
-        self.npc.update_health_bar(screen)
-            # self.npc.damage()
-        # self.forward()
-        # self.player.damage(self.player)
-        if not self.check_collision(self, self.all_players):
-            print("colision")
-            self.npc.rect.x -= self.npc.speed_walk
             
-
-
-        # appliquer l'ensemble des images de mon groupe de monstres
-        self.all_npc.draw(screen)
-        
-        # appliquer l'image du npc
-        screen.blit(self.npc.sprite.image, self.npc.rect)
-        
-
+        # appliquer la gravite pour le joueur et les NPC
+        self.gravity_game()
+       
         # appliquer limage du joueur
         screen.blit(self.player.sprite.image, self.player.rect)
+        
+        # actualiser la barre de vie du joueur
+        self.player.update_health_bar(screen)
+        
+        # actualiser l'animation du joueur
+        self.player.sprite.animate()
+        
+
 
         # verifier si le joueur souhaite aller a hauche ou a droite
         if self.pressed.get(pygame.K_RIGHT):
@@ -123,6 +103,43 @@ class Game:
         # verifier si le joueur saute 
         if self.pressed.get(pygame.K_SPACE):
             self.player.sprite.status = 'attack'
+            
+# ---------------------------------------------- End -------------------------------------------------------------------------------------            
+            
+            
+# -------------------------- Partie NPC -----------------------------------------------------------------------------------------------
+        
+        # actualiser l'animation du monstre
+        self.npc.sprite.animate()
+        
+        # appliquer l'image du npc
+        screen.blit(self.npc.sprite.image, self.npc.rect)
+        
+        # appliquer l'ensemble des images de mon groupe de monstres
+        self.all_npc.draw(screen)
+        
+         # récuperer les monstres de notre jeu
+        self.npc.update_health_bar(screen)
+            # self.npc.damage()
+        # self.forward()
+        # self.player.damage(self.player)
+        # if not self.check_collision(self, self.all_players):
+        #     print("colision")
+        self.npc.rect.x -= self.npc.speed_walk
+        
+        # appliquer le sol pour les monstre
+        if self.sol.rect.colliderect(self.npc.rect):
+            self.resistance = (0, -10)
+            self.collision_sol = True
+
+        else:
+            self.resistance = (0, 0)
+            
+        # if self.npc.sprite > self.screen_width :
+        #     self.npc.rect.x += self.npc.speed_walk
+        
+# ----------------------------------------- End ------------------------------------------------------------------------------------------
+        
 
     
     def check_collision(self, sprite, group):
