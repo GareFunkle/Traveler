@@ -125,7 +125,7 @@ class Game:
         # self.player.damage(self.player)
         # if not self.check_collision(self, self.all_players):
         #     print("colision")
-        self.npc.rect.x -= self.npc.speed_walk
+        self.npc.move_right
         
         # appliquer le sol pour les monstre
         if self.sol.rect.colliderect(self.npc.rect):
@@ -134,9 +134,9 @@ class Game:
 
         else:
             self.resistance = (0, 0)
+        
             
-        # if self.npc.sprite > self.screen_width :
-        #     self.npc.rect.x += self.npc.speed_walk
+        
         
 # ----------------------------------------- End ------------------------------------------------------------------------------------------
         
@@ -151,6 +151,10 @@ class Game:
     def spawn_npc(self):
         self.all_npc.add(self.npc.sprite)
         # self.all_npc.add(npc_class_name.__call__(self))
+        
+        
+            
+        
 
     def gravity_game(self):
         self.player.rect.y += self.gravity[1] + self.resistance[1]
