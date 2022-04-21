@@ -131,8 +131,9 @@ class Game:
         # self.player.damage(self.player)
         # if not self.check_collision(self, self.all_players):
         #     print("colision")
-        self.move_limit()
-        print(self.move_limit())
+        self.npc.move_left()
+        
+        
         
         # appliquer le sol pour les monstre
         if self.sol.rect.colliderect(self.npc.rect):
@@ -153,11 +154,11 @@ class Game:
             sprite, group, False, pygame.sprite.collide_mask
         )
 
-    def move_limit(self):
-        if self.npc.move_left():
-            self.npc.sprite >= self.screen_width
-        else:
-            self.npc.move_right()
+    # def move_limit(self):
+    #     if self.npc.move_left():
+    #         self.npc.sprite > self.screen_width
+    #     else:
+    #         self.npc.move_right()
         
 
     def spawn_npc(self):

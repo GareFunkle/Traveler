@@ -10,7 +10,7 @@ class Can_Walk:
     def move_left(self):
         self.rect.x -= self.speed_walk
         self.sprite.status = 'run'
-        self.sprite.animation_speed = 0.35
+        self.sprite.animation_speed = 0.15
         self.sprite.facing_right = True
         self.speed_walk = random.randint(1, 3)
         
