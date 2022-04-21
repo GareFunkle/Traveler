@@ -18,7 +18,9 @@ class Unit:
         self.sprite.get_rect()
 
     def damage(self, amount):
-        self.current_health -= amount
+        if self.current_health - amount > amount:
+            self.current_health -= amount
+
 
     def update_health_bar(self, surface):
         # dessiner la bar de vie

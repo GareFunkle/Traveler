@@ -22,7 +22,7 @@ class Game:
         self.all_players = pygame.sprite.Group()
         self.player = Player()
         self.all_players.add(self.player.sprite)
-        # groupe de monstre
+        # groupe de NPC
         self.npc = NPC()
         self.all_npc = pygame.sprite.Group()
         self.pressed = {}
@@ -35,6 +35,7 @@ class Game:
         self.clock = pygame.time.Clock()
         self.fps = config.FPS
         self.plateform_group = pygame.sprite.Group()
+        # gestion du scroll de l'ecran
         self.screen_width = screen_width
         self.world_shift = 0
 
@@ -83,9 +84,8 @@ class Game:
         
         # actualiser l'animation du joueur
         self.player.sprite.animate()
+
         
-
-
         # verifier si le joueur souhaite aller a hauche ou a droite
         if self.pressed.get(pygame.K_RIGHT):
             self.player.move_right()
@@ -95,7 +95,7 @@ class Game:
             self.player.move_left()
             self.scroll_x()
 
-        # verifier que le joueur cour
+        # verifier que le joueur courre
         if self.pressed.get(pygame.K_LSHIFT):
             self.player.run()
             self.scroll_x()
@@ -105,9 +105,10 @@ class Game:
             self.player.to_jump = True
             self.player.number_jump += 1
 
-        # verifier si le joueur saute 
+        # verifier si le joueur attack 
         if self.pressed.get(pygame.K_SPACE):
             self.player.sprite.status = 'attack'
+
             
 # ---------------------------------------------- End -------------------------------------------------------------------------------------            
             
@@ -130,7 +131,8 @@ class Game:
         # self.player.damage(self.player)
         # if not self.check_collision(self, self.all_players):
         #     print("colision")
-        self.npc.move_left()
+        self.move_limit()
+        print(self.move_limit())
         
         # appliquer le sol pour les monstre
         if self.sol.rect.colliderect(self.npc.rect):
@@ -150,6 +152,12 @@ class Game:
         return pygame.sprite.spritecollide(
             sprite, group, False, pygame.sprite.collide_mask
         )
+
+    def move_limit(self):
+        if self.npc.move_left():
+            self.npc.sprite >= self.screen_width
+        else:
+            self.npc.move_right()
         
 
     def spawn_npc(self):
