@@ -16,6 +16,7 @@ screen = pygame.display.set_mode((1280, 720))
 
 # importer de charger l'arriere plan
 background = pygame.image.load(data.BACKGROUND)
+background2 = pygame.image.load(data.BACKGROUND2)
 
 # importer ou charger notre banniere
 banner = pygame.image.load(data.BANNER)
@@ -43,6 +44,9 @@ while running:
 
     # appliquer l'arriere plan de notre jeu
     screen.blit(background, (x_background, 0))
+    screen.blit(background2, (x_background+5120, 0))
+    screen.blit(background2, (x_background-5120, 0))
+    screen.blit(background, (x_background+10240, 0))
 
     # verifier si notre jeu a commencer ou non
     if game.is_playing:

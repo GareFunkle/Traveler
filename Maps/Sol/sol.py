@@ -8,5 +8,5 @@ class Sol(pygame.sprite.Sprite):
         self.rect = pygame.Rect(0, 360, 5120, 10)
 
     def afficher(self, surface):
-        pygame.draw.rect(surface, (255, 255, 255), self.rect)
-        #pygame.draw.rect(surface, [255, 255, 255], [0, 0, 0, 180], 1)
+        # pygame.draw.rect(surface, (255, 255, 255), self.rect)
+        pygame.draw.rect(surface, [255, 255, 255], [0, 0, 0, 180], 1)

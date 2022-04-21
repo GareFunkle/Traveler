@@ -1,4 +1,5 @@
 GAME_NAME = "Jeux sans nom"
 BACKGROUND = "assets/Map/Niveau1/map.jpg"
+BACKGROUND2 = "assets/Map/Niveau1/map2.jpg"
 BANNER = "assets/BANNER_MENU/banner.png"
 PLAY_BUTTON = "assets/BANNER_MENU/button_play.png"

@@ -95,6 +95,11 @@ class Game:
             self.player.move_left()
             self.scroll_x()
 
+        # verifier que le joueur cour
+        if self.pressed.get(pygame.K_LSHIFT):
+            self.player.run()
+            self.scroll_x()
+
         # verifier si le joueur saute
         if self.pressed.get(pygame.K_UP):
             self.player.to_jump = True
@@ -125,7 +130,7 @@ class Game:
         # self.player.damage(self.player)
         # if not self.check_collision(self, self.all_players):
         #     print("colision")
-        self.npc.move_right
+        self.npc.move_left()
         
         # appliquer le sol pour les monstre
         if self.sol.rect.colliderect(self.npc.rect):
@@ -135,7 +140,6 @@ class Game:
         else:
             self.resistance = (0, 0)
         
-            
         
         
 # ----------------------------------------- End ------------------------------------------------------------------------------------------
